@@ -1,50 +1,59 @@
-let flashcards = []; // This will store the flashcards data
-let currentCard = 0; // Track the current flashcard
-let isFlipped = false; // Track if the card is flipped
+let flashcards = [];
+let currentCard = 0;
+let isFlipped = false;
 
 // Fetch the vocabulary data from the JSON file
 fetch('vocabulary.json')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+    return response.json();
+  })
   .then(data => {
-    flashcards = data; // Store the data in the flashcards array
+    flashcards = data;
     displayFlashcard(); // Display the first flashcard
   })
   .catch(error => {
     console.error('Error fetching the vocabulary:', error);
+    document.getElementById('content').innerText = 'Error loading vocabulary data!';
   });
 
 // Function to display the flashcard
 function displayFlashcard() {
+  if (flashcards.length === 0) {
+    document.getElementById('content').innerText = 'No vocabulary data found!';
+    return;
+  }
+
   const flashcard = flashcards[currentCard];
   const content = document.getElementById('content');
   
   if (isFlipped) {
-    // Show definition, translation, and verb forms if flipped
     content.innerHTML = `
       <p><strong>Definition:</strong> ${flashcard.definition}</p>
       <p><strong>Translation:</strong> ${flashcard.translation}</p>
       <p><strong>Verb Forms:</strong> ${flashcard['Verb Form (if applicable)']}</p>
     `;
   } else {
-    // Show the word on the front
     content.innerHTML = `<h2>${flashcard.word}</h2>`;
   }
 }
 
 // Event listeners for buttons
 document.getElementById('flip-btn').addEventListener('click', () => {
-  isFlipped = !isFlipped; // Toggle flip state
+  isFlipped = !isFlipped;
   displayFlashcard();
 });
 
 document.getElementById('next-btn').addEventListener('click', () => {
-  currentCard = (currentCard + 1) % flashcards.length; // Go to next card
-  isFlipped = false; // Reset flip state
+  currentCard = (currentCard + 1) % flashcards.length;
+  isFlipped = false;
   displayFlashcard();
 });
 
 document.getElementById('prev-btn').addEventListener('click', () => {
-  currentCard = (currentCard - 1 + flashcards.length) % flashcards.length; // Go to previous card
-  isFlipped = false; // Reset flip state
+  currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+  isFlipped = false;
   displayFlashcard();
 });
