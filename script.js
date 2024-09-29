@@ -7,16 +7,21 @@ fetch('https://raw.githubusercontent.com/learnandbalance/flashcards/main/vocabul
     return response.json();
   })
   .then(data => {
-    console.log(data); // The data is now available for use
+    console.log('Vocabulary data fetched successfully:', data); // Check if data is fetched
     displayVocabulary(data); // Call a function to display the vocabulary
   })
   .catch(error => {
-    console.error('Error fetching the vocabulary:', error);
+    console.error('Error fetching the vocabulary:', error);  // Log any errors here
   });
 
 // Function to display the vocabulary on the webpage
 function displayVocabulary(vocabularyList) {
   const vocabularyContainer = document.getElementById('vocabulary-container');
+
+  if (vocabularyList.length === 0) {
+    vocabularyContainer.textContent = 'No vocabulary data found!';
+    return;
+  }
 
   vocabularyList.forEach(vocab => {
     // Create HTML elements for each vocabulary item
