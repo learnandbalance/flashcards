@@ -7,6 +7,7 @@ fetch('vocabulary.json')
   .then(response => response.json())
   .then(data => {
     flashcards = data; // Store the flashcard data
+    console.log("Fetched flashcards data:", flashcards); // Log the fetched data
     displayFlashcard(); // Display the first flashcard
   })
   .catch(error => {
@@ -22,6 +23,8 @@ function displayFlashcard() {
   }
 
   const flashcard = flashcards[currentCard];
+  console.log("Current flashcard data:", flashcard); // Log current flashcard
+
   const content = document.getElementById('content');
   
   if (isFlipped) {
