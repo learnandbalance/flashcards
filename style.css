@@ -9,53 +9,37 @@ body {
 }
 
 .flashcard-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
 }
 
 .flashcard {
     width: 300px;
-    height: 200px;
+    padding: 20px;
     background-color: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-.flashcard .question,
-.flashcard .answer {
+.question {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.answer {
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 20px;
     display: none;
 }
 
-.flashcard.flipped .answer {
-    display: block;
-}
-
-.flashcard:not(.flipped) .question {
-    display: block;
-}
-
 .controls {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 button {
     padding: 10px 20px;
     margin: 5px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 5px;
+    font-size: 1em;
     cursor: pointer;
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
 }
