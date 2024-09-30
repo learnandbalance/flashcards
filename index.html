@@ -9,15 +9,16 @@
 <body>
     <div class="flashcard-container">
         <div class="flashcard" id="flashcard">
-            <div class="question" id="question"></div>
-            <div class="answer" id="answer"></div>
+            <div class="question" id="question">Word</div>
+            <div class="answer" id="answer">Definition</div>
         </div>
         <div class="controls">
             <button id="prev" onclick="prevFlashcard()">Previous</button>
-            <button id="flip" onclick="flipFlashcard()">Flip</button>
+            <button id="show" onclick="toggleAnswer()">Show/Hide Definition</button>
             <button id="next" onclick="nextFlashcard()">Next</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
