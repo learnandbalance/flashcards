@@ -1,42 +1,44 @@
-let vocabularyData = [];  // This will hold your vocabulary JSON data.
+let flashcards = [];
 let currentIndex = 0;
-let isFlipped = false;
+let showDefinition = false;
 
-// Fetch the JSON file and initialize the flashcards
 fetch('vocabulary01.json')
     .then(response => response.json())
     .then(data => {
-        vocabularyData = data;
-        showFlashcard(currentIndex);
-    })
-    .catch(error => console.error('Error loading vocabulary:', error));
+        flashcards = data;
+        showFlashcard();
+    });
 
-function showFlashcard(index) {
-    const flashcard = document.getElementById('flashcard');
-    const questionDiv = document.getElementById('question');
-    const answerDiv = document.getElementById('answer');
-
-    questionDiv.textContent = vocabularyData[index].word;
-    answerDiv.textContent = vocabularyData[index].definition;
-    flashcard.classList.remove('flipped');
-
-    // Disable prev/next buttons if at the start or end of the list
-    document.getElementById('prev').disabled = index === 0;
-    document.getElementById('next').disabled = index === vocabularyData.length - 1;
+function showFlashcard() {
+    const question = document.getElementById('question');
+    const answer = document.getElementById('answer');
+    
+    if (flashcards.length > 0) {
+        question.textContent = flashcards[currentIndex].word;
+        answer.textContent = flashcards[currentIndex].definition;
+    }
 }
 
-function flipFlashcard() {
-    const flashcard = document.getElementById('flashcard');
-    flashcard.classList.toggle('flipped');
-    isFlipped = !isFlipped;
+function toggleAnswer() {
+    const answer = document.getElementById('answer');
+    showDefinition = !showDefinition;
+    answer.style.display = showDefinition ? 'block' : 'none';
 }
 
 function nextFlashcard() {
-    if (currentIndex < vocabularyData.length - 1) {
+    if (currentIndex < flashcards.length - 1) {
         currentIndex++;
-        showFlashcard(currentIndex);
+        showDefinition = false;
+        document.getElementById('answer').style.display = 'none';
+        showFlashcard();
     }
 }
 
 function prevFlashcard() {
-    if (currentIndex > 0
+    if (currentIndex > 0) {
+        currentIndex--;
+        showDefinition = false;
+        document.getElementById('answer').style.display = 'none';
+        showFlashcard();
+    }
+}
